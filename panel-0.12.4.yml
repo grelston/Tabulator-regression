@@ -1,0 +1,11 @@
+name: panel-0.12.4
+channels:
+  - pyviz
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - panel=0.12.4
+  - pandas
+  - openpyxl
+  - notebook
