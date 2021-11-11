@@ -1,10 +1,12 @@
 # Regression in Tabulator widget for panel>0.12.1
 
 Copying selected rows from the DataFrame behind a filtered Tabulator widget
-works for panel=0.12.1 but fails with an `IndexError` for panel>=0.12.2.
+succeeds for panel=0.12.1 but fails with an `IndexError` for panel>=0.12.2.
 
 
 ## Environment
+
+<details>
 
 OS:
   - Windows 10
@@ -23,29 +25,43 @@ conda environment:
   - param=1.12.0
   - python=3.9.7
 
+</details>
+
 
 ## Steps to reproduce
+
+<details>
 
   1. Create conda environments from the .yml files.
   2. Run the MRE in the Jupyter notebook Tabulator-regression.ipynb
   3. The bug can be reproduced by either:
-    * running the bottom 4 cells of the notebook; or
-    * using the GUI:
-      * enter e.g. "cut" in the "descr" filter box;
-      * select some or all of the filtered rows;
-      * click the "Add selected rows" button;
+      * running the bottom 4 cells of the notebook; or
+      * using the GUI:
+          * enter e.g. "cut" in the "descr" filter box;
+          * select some or all of the filtered rows;
+          * click the "Add selected rows" button;
   4. Result:
-    * selected rows appear in the lower Tabulator (for panel=0.12.1)
-    * nothing happens (for panel>=0.12.2)
+      * 5 rows appear in the lower Tabulator (for panel=0.12.1)
+          * top 2 rows selected from the unfiltered (top) Tabulator
+          * bottom 3 rows selected from the filtered (top) Tabulator
+      * 2 rows appear in the lower Tabulator (for panel>=0.12.2)
+          * only the top 2 rows selected from the unfiltered (top) Tabulator
+          * no rows are added when selected from the filtered (top) Tabulator
+
+</details>
 
 
-## Expected result
+## Results
+
+<details>
+
+### Expected result
 
 Running all the cells in the notebook with panel=0.12.1 will show the
 following in the lower Tabulator:
 
 code | descr             | temp
------+-------------------+-----
+-----|-------------------|-----
  00  | Under the Weather | 1.0
  01  |        Top Drawer | 1.0
  03  |  Cut To The Chase | 1.0
@@ -53,15 +69,25 @@ code | descr             | temp
  08  |   Cut The Mustard | 1.0
 
 
-## Actual result
+### Actual result
 
 Running all the cells in the notebook with panel>=0.12.2 will show the
 following in the lower Tabulator:
 
 code | descr             | temp
------+-------------------+-----
+-----|-------------------|-----
  00  | Under the Weather | 1.0
  01  |        Top Drawer | 1.0
 
 
+</details>
+
 ## Screenshots
+
+### Succeeds for panel=0.12.1
+
+![Copying selected filtered rows works for panel=0.12.1](add_rows-works.gif)
+
+### Fails for panel>=0.12.2
+
+![Copying selected filtered rows fails for panel>=0.12.2](add_rows-fails.gif)
